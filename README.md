@@ -22,8 +22,8 @@ time  force  position
 ```
 the bias_params has a very particular required format:
 ```
-       	    nu num
-	    So num
+nu num
+So num
 ``` 
        where num is a double. 
 
@@ -31,5 +31,5 @@ See the provided example bias_params file to make sure you understand the format
        
 the output file has two columns: 
 ``` 
-       	    #time  position  
+#time  position  
 ```
