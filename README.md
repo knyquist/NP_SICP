@@ -13,7 +13,7 @@ To run the code:
        
 2) to run: type
 '''' 
-./kal dataset bias_params > output
+                    ./kal dataset bias_params > output
 ''''  
     
 Notes: the dataset should have three columns:  
