@@ -11,7 +11,8 @@ This code is very similar to my c-lang implementation of KV's SIC, but now inclu
 To run the code:  
 1) type make to compile, kal becomes the executable  
        
-       2) to run: type "./kal dataset bias_params > output"  
+2) to run: type 
+   ./kal dataset bias_params > output  
     
 Notes: the dataset should have three columns:  
             #time  force  position  
