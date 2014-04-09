@@ -31,3 +31,10 @@ the output file has two columns:
 ```
 time  position
 ```
+
+You can test the code on the provided fake dataset. Luckily, the contents in params.txt contain the proper nu and So to handle the data!
+
+**PROTIP** if you want to generate a params.txt file on the fly you can one line it with something like:
+```
+touch params.txt; printf "nu num1\nSo num2" > params.txt
+```
