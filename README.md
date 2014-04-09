@@ -1,4 +1,4 @@
-# Nyquist and Press`e SICP step fitting algorithm
+# Nyquist and Press'e SICP step fitting algorithm
 (based on SIC implentation by Kalafut and Visscher but includes a prior for the expected noise of the system)
 
 I have the code organized into three files...these are in the 'Kalafut' folder  
