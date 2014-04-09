@@ -29,19 +29,23 @@ int main(int argc, char *argv[] )
   /* Get the biasing parameters from parameter file 
      (this is supplied by argv[2])                  */
   double nu = 0.; double So = 0.; double bparams[2] = {}; //nu first, then So
+  char bnames[2]={};
   FILE * fi; fi=fopen(argv[2],"r");
-  int i=0; while(i<2) { //there are only two params, nu and So
-    fscanf(fi, "%lf", &bparams[i]); i+=1;
-  }
-  fclose(fi);
-  nu=bparams[0]; So=bparams[1];
-  
-  /* Initialize with No Step SIC calculation */
+  int i=0; while(i<4) { //there are only two params, nu and So
+    fscanf(fi,"%s %lf", &bnames[i], &bparams[i]); i+=1;
+  } fclose(fi);
+  if(bnames[0]=='n' && bnames[1]=='S') {
+    nu=bparams[0]; So=bparams[1]; } 
+  else { return(0); printf("Error: biasing parameters could not be properly initialized\n"); }
+ 
+  // Initialize with No Step SIC calculation 
   step_fit this_fit; this_fit = InitializeFitToZeros(this_fit,1);
   this_fit = NoStepSIC(position,
-		       numberofpoints);
+		       numberofpoints,
+		       nu,
+		       So);
   
-  /* Start Adding Steps, terminate when SIC no longer minimized */
+  // Start Adding Steps, terminate when SIC no longer minimized 
   int n_dwells = 1; step_fit final_fit;
   step_fit prev_fit; prev_fit = InitializeFitToZeros(prev_fit,n_dwells);
   int* step_indices; step_indices = (int*) malloc(numberofpoints*sizeof(int));  
@@ -64,7 +68,9 @@ int main(int argc, char *argv[] )
 			  numberofpoints,
 			  step_indices,
 			  n_dwells,
-			  prev_fit);
+			  prev_fit,
+			  nu,
+			  So);
     n_dwells+=1;
   }
   while(this_fit.SIC < prev_fit.SIC);
@@ -76,7 +82,6 @@ int main(int argc, char *argv[] )
     printf("%f %f\n",time[prev_fit.step_locations[i]],prev_fit.means[i+1]);
   }
   printf("%f %f\n",time[numberofpoints-1],prev_fit.means[n_dwells-2]);
-
   return 0;
 }
 

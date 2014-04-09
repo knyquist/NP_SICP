@@ -6,15 +6,15 @@
 
 step_fit NoStepSIC(double* pos,
 		   int n,
-		   double So,
-		   double nu) {
+		   double nu,
+		   double So) {
   step_fit no_step;
   no_step = InitializeFitToZeros(no_step,1);
   for(int i=0;i<n;i++) no_step.means[0] += pos[i];
   no_step.means[0] = no_step.means[0]/n;
   for(int i=0;i<n;i++) no_step.chisq += pow(pos[i]-no_step.means[0],2.);
   no_step.chisq = (/*1840.5*/So+no_step.chisq)/(n+nu-2/*204.5*/);//nu=206.5; Sn=1840.5 for var=9,varvar=0.8
-  no_step.SIC = 2*log(n)+(n+208.5)*log(no_step.chisq)+/*1840.5*/So/no_step.chisq;
+  no_step.SIC = 2*log(n)+(n+nu+2/*208.5*/)*log(no_step.chisq)+/*1840.5*/So/no_step.chisq;
   return no_step;
 }
 
@@ -22,7 +22,9 @@ step_fit AddStepSIC(double* pos,
 		    int n, 
 		    int* step_indices,
 		    int n_dwell,
-		    step_fit prev_fit) {
+		    step_fit prev_fit,
+		    double nu,
+		    double So) {
   step_fit curr_fit; // current interation of the fit
   curr_fit = InitializeFitToZeros(curr_fit,n_dwell+1);
   step_fit win_fit; //running best fit during this AddStepSIC iteration
@@ -46,7 +48,7 @@ step_fit AddStepSIC(double* pos,
       tmpright=tmpright/(j-i-1); j=0;
       /* get the new chisq (also remove the previous part) */
       double prev_mean=GetPreviousDwellMean(prev_fit,step_indices,i);
-      curr_fit.chisq=prev_fit.chisq*(n+34.3)-580.;
+      curr_fit.chisq=prev_fit.chisq*(n+/*34.3*/nu-2)-/*580.*/So;
       j=i-1;
       while((step_indices[j]==0)&&(j>=0)) {
 	curr_fit.chisq -= pow(pos[j]-prev_mean,2.);
@@ -60,8 +62,8 @@ step_fit AddStepSIC(double* pos,
 	j+=1;
       }
       while((step_indices[j]==0)&&(j<n));
-      curr_fit.chisq=(580.+curr_fit.chisq)/(n+34.3);
-      curr_fit.SIC=((n_dwell)+2)*log(n)+(n+38.3)*log(curr_fit.chisq)+580./curr_fit.chisq;//n_dwell is now the number of steps for this added step.  it is updated after this completes but before the next iteration.
+      curr_fit.chisq=(/*580.*/So+curr_fit.chisq)/(n+nu-2/*34.3*/);
+      curr_fit.SIC=((n_dwell)+2)*log(n)+(n+nu+2/*38.3*/)*log(curr_fit.chisq)+/*580.*/So/curr_fit.chisq;//n_dwell is now the number of steps for this added step.  it is updated after this completes but before the next iteration.
       if((curr_fit.SIC<win_fit.SIC)||(win_fit.SIC==-1.0)) {
 	win_fit = SetFitToZeros(win_fit,n_dwell+1);
 	win_step_location=i;

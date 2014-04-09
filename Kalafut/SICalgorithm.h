@@ -11,13 +11,17 @@ struct step_fit {
 };
 
 step_fit NoStepSIC(double*,
-		   int);
+		   int,
+		   double,
+		   double);
 
 step_fit AddStepSIC(double*, 
 		    int, 
 		    int*,
 		    int,
-		    step_fit);
+		    step_fit,
+		    double,
+		    double);
 
 step_fit InitializeFitToZeros(step_fit,
 			      int);
