@@ -9,7 +9,7 @@ I have the code organized into three files...these are in the 'Kalafut' folder
 
 This code is very similar to my c-lang implementation of KV's SIC, but now includes two parameters which form the prior for the expected noise.
 To run the code:  
-       1) type make to compile, kal becomes the executable  
+1) type make to compile, kal becomes the executable  
        
        2) to run: type "./kal dataset bias_params > output"  
     
