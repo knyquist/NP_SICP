@@ -29,5 +29,5 @@ where num is a double and nu, So are just strings 'naming the numbers' (so to sp
        
 the output file has two columns: 
 ``` 
-#time  position  
+|time |  position  
 ```
