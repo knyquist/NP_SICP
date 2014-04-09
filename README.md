@@ -28,6 +28,4 @@ So num
 where num is a double and nu, So are just strings 'naming the numbers' (so to speak). The code uses the strings to confirm that the numbers are in the right order. See the provided example bias_params file to make sure you understand the format. The code will either break or not spit out the right result if you don't provide the proper inputs.
        
 the output file has two columns: 
-``` 
 |time |  position  
-```
