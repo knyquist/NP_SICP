@@ -1,2 +1,6 @@
 *.dat
 *.out
+#*#
+*~
+Kalafut/*~
+Kalafut/#*#
